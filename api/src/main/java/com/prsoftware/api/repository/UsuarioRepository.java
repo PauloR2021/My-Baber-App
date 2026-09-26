@@ -3,6 +3,11 @@ package com.prsoftware.api.repository;
 import com.prsoftware.api.entity.UsuarioEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Integer> {
+import java.util.Optional;
+
+public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
+    Optional<UsuarioEntity> findByEmail(String email);
+
+    boolean existsByEmail(String email);
 
 }
