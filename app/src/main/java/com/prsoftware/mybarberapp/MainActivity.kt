@@ -1,19 +1,16 @@
-package com.prsoftware.mybarberapp
+/*
+* Class: Responsável por gerenciar o APP.
+* Chama a Tela do login quando o APP inicia
+*
+* Author: Paulo Ricardo
+*/
 
+package com.prsoftware.mybarberapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.prsoftware.mybarberapp.ui.login.LoginScreen
-import com.prsoftware.mybarberapp.ui.theme.MyBarberAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
