@@ -6,7 +6,7 @@
 */
 
 
-package com.prsoftware.mybarberapp.data.remote.dto
+package com.prsoftware.mybarberapp.data.remote.dto.usuario
 data class ResponseUsuario(
     val id : Long,
     val nome : String,
