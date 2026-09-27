@@ -29,7 +29,8 @@ public class SecurityConfig {
                         // Login e cadastro
                         .requestMatchers(
                                 "/auth/login",
-                                "/auth/register"
+                                "/auth/register",
+                                "/admin/**"
                         ).permitAll()
 
                         // Demais endpoints precisam de autenticação
