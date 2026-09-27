@@ -10,5 +10,6 @@ package com.prsoftware.mybarberapp.data.remote.dto
 data class ResponseUsuario(
     val id : Long,
     val nome : String,
-    val email : String
+    val email : String,
+    val role : String
 )
