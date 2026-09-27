@@ -21,11 +21,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.LaunchedEffect
 
 
 @Composable
-fun LoginScreen(viewModel: LoginViewModel = viewModel())
+fun LoginScreen(
+    viewModel: LoginViewModel = viewModel(),
+    onLoginSucesso: () -> Unit,
+    onCadastro: () -> Unit
+)
 {
+    LaunchedEffect(viewModel.loginRealizado) {
+
+        if (viewModel.loginRealizado) {
+            onLoginSucesso()
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -101,15 +112,12 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel())
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center
                 )
-
             }
-
-
         }
 
 
         TextButton(
-            onClick = {}
+            onClick = {onCadastro()}
         ) {
             Text("Criar um Conta")
         }
@@ -123,12 +131,13 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel())
 @Preview(
     showBackground = true,
     showSystemUi = true,
-    widthDp = 360,
-    heightDp = 800
 )
 @Composable
 fun LoginScreenPreview(){
     MaterialTheme(){
-        LoginScreen()
+        LoginScreen(
+            onLoginSucesso = {},
+            onCadastro = {}
+        )
     }
 }

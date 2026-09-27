@@ -14,7 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prsoftware.mybarberapp.data.remote.RetrofitClient
-import com.prsoftware.mybarberapp.data.remote.dto.LoginRequest
+import com.prsoftware.mybarberapp.data.remote.dto.login.LoginRequest
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
@@ -27,6 +27,9 @@ class LoginViewModel : ViewModel() {
     var mensagem by mutableStateOf("")
         private set
 
+    var loginRealizado by mutableStateOf(false)
+        private set
+
     fun onEmailChange(novoEmail: String) {
         email = novoEmail
     }
@@ -35,6 +38,7 @@ class LoginViewModel : ViewModel() {
     fun onSenhaChange(novaSenha: String) {
         senha = novaSenha
     }
+
 
     fun entrar(){
 
@@ -51,14 +55,19 @@ class LoginViewModel : ViewModel() {
                 )
                 val response =
                     RetrofitClient.api.login(request)
+
                 if(response.isSuccessful){
                     val usuario = response.body()
 
                     if(usuario != null){
                         mensagem = "Bem-vindo, ${usuario.nome}"
                     }
+
+                    loginRealizado = true
                 }else{
                     mensagem = "E-mail ou senha inválidos"
+
+                    loginRealizado = false
                 }
             }catch(e: Exception){
                 mensagem = "Erro ao conectar com o servidor"
