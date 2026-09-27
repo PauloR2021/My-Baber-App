@@ -1,15 +1,13 @@
 package com.prsoftware.api.controller;
 
 import com.prsoftware.api.dtos.LoginRequest;
-import com.prsoftware.api.dtos.ResponseUsuario;
-import com.prsoftware.api.dtos.UsuarioRequest;
-import com.prsoftware.api.entity.UsuarioEntity;
+import com.prsoftware.api.dtos.usuario.ResponseUsuario;
+import com.prsoftware.api.dtos.usuario.UsuarioRequest;
 import com.prsoftware.api.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,14 +25,17 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
+
+
     @Operation(
             summary = "Cadastrar usuário",
             description = "Cadastra um novo usuário no sistema"
     )
     @PostMapping("/register")
-    public ResponseEntity<String> cadastrar(@RequestBody UsuarioRequest request) {
-        usuarioService.novoUsuario(request);
-        return ResponseEntity.ok("Usuário cadastrado com sucesso");
+    public ResponseEntity<ResponseUsuario> cadastrar(@RequestBody UsuarioRequest request) {
+        ResponseUsuario usuario = usuarioService.novoUsuario(request);
+
+        return ResponseEntity.ok(usuario);
     }
 
     @Operation(
