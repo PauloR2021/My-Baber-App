@@ -4,7 +4,7 @@
 * Author: Paulo Ricardo
 */
 
-package com.prsoftware.mybarberapp.data.remote.dto
+package com.prsoftware.mybarberapp.data.remote.dto.usuario
 data class UsuarioRequest(
     val nome : String,
     val email : String,
