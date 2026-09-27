@@ -5,8 +5,9 @@
 */
 
 package com.prsoftware.mybarberapp.data.remote
-import com.prsoftware.mybarberapp.data.remote.dto.LoginRequest
-import com.prsoftware.mybarberapp.data.remote.dto.ResponseUsuario
+import com.prsoftware.mybarberapp.data.remote.dto.login.LoginRequest
+import com.prsoftware.mybarberapp.data.remote.dto.usuario.ResponseUsuario
+import com.prsoftware.mybarberapp.data.remote.dto.usuario.UsuarioRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -18,5 +19,10 @@ interface ApiService {
     @POST("/auth/login")
     suspend fun login(
         @Body request: LoginRequest
+    ): Response<ResponseUsuario>
+
+    @POST("/auth/register")
+    suspend fun cadastrar(
+        @Body request: UsuarioRequest
     ): Response<ResponseUsuario>
 }
