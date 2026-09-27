@@ -11,13 +11,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
 import com.prsoftware.mybarberapp.ui.login.LoginScreen
+import com.prsoftware.mybarberapp.ui.navigation.AppNavigation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme{
-                LoginScreen()
+                AppNavigation()
             }
         }
 
