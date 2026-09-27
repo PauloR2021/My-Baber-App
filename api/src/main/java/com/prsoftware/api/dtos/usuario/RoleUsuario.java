@@ -1,6 +1,7 @@
-package com.prsoftware.api.dtos;
+package com.prsoftware.api.dtos.usuario;
 
 public enum RoleUsuario {
-    ADMIN,
-    USER
+    USER,
+    ADMIN
+
 }
