@@ -1,10 +1,7 @@
 package com.prsoftware.api.service;
 
 import com.prsoftware.api.dtos.LoginRequest;
-import com.prsoftware.api.dtos.usuario.ResponseUsuario;
-import com.prsoftware.api.dtos.usuario.RoleUsuario;
-import com.prsoftware.api.dtos.usuario.UsuarioRequest;
-import com.prsoftware.api.dtos.usuario.UsuarioRequestAdmin;
+import com.prsoftware.api.dtos.usuario.*;
 import com.prsoftware.api.entity.UsuarioEntity;
 import com.prsoftware.api.repository.UsuarioRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,36 +19,7 @@ public class UsuarioService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public ResponseUsuario novoUsuarioAdmin(UsuarioRequestAdmin admin) {
-        if(usuarioRepository.existsByEmail(admin.email())){
-            throw new RuntimeException("Email já cadastrado");
-        }
-
-        UsuarioEntity newUsuario = new UsuarioEntity();
-        newUsuario.setNome(admin.nome());
-        newUsuario.setEmail(admin.email());
-        newUsuario.setSenha(passwordEncoder.encode(admin.senha()));
-        newUsuario.setRole(admin.role());
-        usuarioRepository.save(newUsuario);
-
-        return toResponse(newUsuario);
-    }
-
-    public ResponseUsuario novoUsuario(UsuarioRequest usuarioRequest) {
-        if(usuarioRepository.existsByEmail(usuarioRequest.email())){
-            throw new RuntimeException("Email já cadastrado");
-        }
-
-        UsuarioEntity newUsuario = new UsuarioEntity();
-        newUsuario.setNome(usuarioRequest.nome());
-        newUsuario.setEmail(usuarioRequest.email());
-        newUsuario.setSenha(passwordEncoder.encode(usuarioRequest.senha()));
-        newUsuario.setRole(RoleUsuario.USER);
-        usuarioRepository.save(newUsuario);
-
-        return toResponse(newUsuario);
-    }
-
+    // ===================== REGRA DE NÉGOCIO PARA LOGIN ==================== #
     public ResponseUsuario login (LoginRequest loginRequest) {
         UsuarioEntity usuario = usuarioRepository
                 .findByEmail(loginRequest.email())
@@ -67,6 +35,64 @@ public class UsuarioService {
 
         return toResponse(usuario);
     }
+
+    // ===================== REGRA DE NÉGOCIO PARA USUÁRIO USER ==================== #
+    public ResponseUsuario novoUsuario(UsuarioRequest usuarioRequest) {
+        if(usuarioRepository.existsByEmail(usuarioRequest.email())){
+            throw new RuntimeException("Email já cadastrado");
+        }
+
+        UsuarioEntity newUsuario = new UsuarioEntity();
+        newUsuario.setNome(usuarioRequest.nome());
+        newUsuario.setEmail(usuarioRequest.email());
+        newUsuario.setSenha(passwordEncoder.encode(usuarioRequest.senha()));
+        newUsuario.setRole(RoleUsuario.USER);
+        usuarioRepository.save(newUsuario);
+
+        return toResponse(newUsuario);
+    }
+
+    public ResponseUsuario meuPerfil(String email){
+        UsuarioEntity usuario = usuarioRepository
+                .findByEmail(email)
+                .orElseThrow(
+                        () ->new RuntimeException("E-mail não encontrado")
+                );
+        return toResponse(usuario);
+    }
+
+    public ResponseUsuario trocarSenha (TrocaSenhaRequest request){
+
+        UsuarioEntity usuario = usuarioRepository
+                .findByEmail(request.email())
+                .orElseThrow(
+                        () ->new RuntimeException("E-mail não encontrado")
+                );
+
+        usuario.setSenha(passwordEncoder.encode(request.senha()));
+
+        usuarioRepository.save(usuario);
+        return toResponse(usuario);
+    }
+
+
+    // ===================== REGRA DE NÉGOCIO PARA USUÁRIO ADM ==================== #
+    public ResponseUsuario novoUsuarioAdmin(UsuarioRequestAdmin admin) {
+        if(usuarioRepository.existsByEmail(admin.email())){
+            throw new RuntimeException("Email já cadastrado");
+        }
+
+        UsuarioEntity newUsuario = new UsuarioEntity();
+        newUsuario.setNome(admin.nome());
+        newUsuario.setEmail(admin.email());
+        newUsuario.setSenha(passwordEncoder.encode(admin.senha()));
+        newUsuario.setRole(admin.role());
+        usuarioRepository.save(newUsuario);
+
+        return toResponse(newUsuario);
+    }
+
+    // ===================== RETORNOS PADRÃO ==================== #
 
     private ResponseUsuario toResponse  (UsuarioEntity usuario){
         usuario.setId( usuario.getId() );
