@@ -15,7 +15,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.prsoftware.mybarberapp.ui.cadastro.CadastroScreen
+import com.prsoftware.mybarberapp.ui.home.HomeScreen
 import com.prsoftware.mybarberapp.ui.login.LoginScreen
+import com.prsoftware.mybarberapp.ui.meuPerfil.MeuPerfilScreen
 
 @Composable
 fun AppNavigation(){
@@ -58,7 +60,37 @@ fun AppNavigation(){
 
         // HOME
         composable("home"){
+            HomeScreen(
+                onLogout = {
+                    navController.navigate("login")
+                },
+                onNovoAgendamento = {
 
+                },
+                onMeusAgendamentos = {
+
+                },
+                onMeuPerfil = {
+                    navController.navigate("meuPerfil")
+
+                }
+            )
+        }
+
+        // NOVO AGENDAMENTO
+        composable ("novoAgendamento"){}
+
+        // MEUS AGENDAMENTOS
+        composable ("meusAgendamento"){}
+
+        // MEU PERFIL
+        composable ("meuPerfil"){
+            MeuPerfilScreen(
+                onHome = {
+                    navController.popBackStack()
+                }
+
+            )
         }
     }
 }
