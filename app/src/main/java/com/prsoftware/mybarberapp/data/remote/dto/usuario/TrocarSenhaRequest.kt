@@ -1,3 +1,6 @@
 package com.prsoftware.mybarberapp.data.remote.dto.usuario
 
-data class TrocarSenhaRequest()
+data class TrocarSenhaRequest(
+    val email : String,
+    val senha : String
+)
