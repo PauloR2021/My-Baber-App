@@ -7,10 +7,12 @@
 package com.prsoftware.mybarberapp.data.remote
 import com.prsoftware.mybarberapp.data.remote.dto.login.LoginRequest
 import com.prsoftware.mybarberapp.data.remote.dto.usuario.ResponseUsuario
+import com.prsoftware.mybarberapp.data.remote.dto.usuario.TrocarSenhaRequest
 import com.prsoftware.mybarberapp.data.remote.dto.usuario.UsuarioRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface ApiService {
 
@@ -25,4 +27,10 @@ interface ApiService {
     suspend fun cadastrar(
         @Body request: UsuarioRequest
     ): Response<ResponseUsuario>
+
+    @PUT("/user/trocar-senha")
+    suspend fun trocarSenha(
+        @Body request: TrocarSenhaRequest
+    ): Response<ResponseUsuario>
+
 }
