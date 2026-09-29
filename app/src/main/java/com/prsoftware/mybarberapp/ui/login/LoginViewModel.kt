@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prsoftware.mybarberapp.data.remote.RetrofitClient
 import com.prsoftware.mybarberapp.data.remote.dto.login.LoginRequest
+import com.prsoftware.mybarberapp.data.session.UsuarioSession
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
@@ -60,10 +61,16 @@ class LoginViewModel : ViewModel() {
                     val usuario = response.body()
 
                     if(usuario != null){
+                        UsuarioSession.salvar(
+                            id = usuario.id,
+                            nome = usuario.nome,
+                            email = usuario.email,
+                            role = usuario.role
+                        )
                         mensagem = "Bem-vindo, ${usuario.nome}"
+                        loginRealizado = true
                     }
 
-                    loginRealizado = true
                 }else{
                     mensagem = "E-mail ou senha inválidos"
 
