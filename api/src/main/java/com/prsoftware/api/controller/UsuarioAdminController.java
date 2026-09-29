@@ -1,18 +1,14 @@
 package com.prsoftware.api.controller;
 
 import com.prsoftware.api.dtos.usuario.ResponseUsuario;
-import com.prsoftware.api.dtos.usuario.UsuarioRequest;
 import com.prsoftware.api.dtos.usuario.UsuarioRequestAdmin;
 import com.prsoftware.api.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/admin")
 @Tag(
         name = "Acesso Admin",
@@ -33,6 +29,13 @@ public class UsuarioAdminController {
     @PostMapping("/register")
     public ResponseEntity<ResponseUsuario> cadastrar(@RequestBody UsuarioRequestAdmin request) {
         ResponseUsuario usuario = usuarioService.novoUsuarioAdmin(request);
+
+        return ResponseEntity.ok(usuario);
+    }
+
+    @GetMapping("/my-user")
+    public ResponseEntity<ResponseUsuario> myUser( @RequestParam String email) {
+        ResponseUsuario usuario = usuarioService.meuPerfil(email);
 
         return ResponseEntity.ok(usuario);
     }
