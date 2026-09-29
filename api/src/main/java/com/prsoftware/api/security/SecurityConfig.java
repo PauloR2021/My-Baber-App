@@ -30,7 +30,9 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/auth/login",
                                 "/auth/register",
-                                "/admin/**"
+                                "/admin/**",
+                                "/user/**",
+                                "/user//trocar-senha"
                         ).permitAll()
 
                         // Demais endpoints precisam de autenticação
